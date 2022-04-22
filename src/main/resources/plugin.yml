@@ -1,0 +1,8 @@
+name: RegionAccess
+version: '${project.version}'
+main: me.itsadrift.regionaccess.RegionAccess
+api-version: 1.18
+depend: [WorldEdit, WorldGuard]
+commands:
+  regionaccess:
+    aliases: [ra]

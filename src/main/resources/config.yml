@@ -1,0 +1,20 @@
+# Should members/owners of a region be given access regardless of if they have the required permission.
+defaultMemberAccess: true
+defaultAccessDenied: "&c[RegionAccess] &7You do not have permission to enter this region!"
+# Placeholders
+#
+# {REGION} - The name of the region
+# {PERMISSION} - The permission set for the region
+#
+# {SETTING} - The setting changed (denyMessage/memberBypass)
+# {VALUE} - The value given to the setting
+messages:
+  configReloaded: "&c[RegionAccess] &7Config reloaded."
+  noPermission: "&c[RegionAccess] &7No Permission"
+  invalidArguments: "&c[RegionAccess] &7Invalid Arguments. See &c/regionaccess help"
+  invalidRegion: "&c[RegionAccess] &7No access region found with the name &c{REGION}"
+  regionInfo: "&8&l----------[&c&l {REGION} Info &8&l]---------- \n &cPermission: &7{PERMISSION} \n &cCustom message: &7{DENY_MESSAGE} \n &cMember Bypass: &7{MEMBER_BYPASS}"
+  regionSet: "&c[RegionAccess] &7You have set the permission &c{PERMISSION} &7for the region &c{REGION}"
+  regionRemoved: "&c[RegionAccess] &7The region &c{REGION} &7will no longer be an access region."
+  regionEdit: "&c[RegionAccess] &7You have set &c{SETTING} &7to &c{VALUE}"
+  denyMessageDisabled: "&c[RegionAccess] &7You have &cdisabled &7the deny message for &c{REGION}"
