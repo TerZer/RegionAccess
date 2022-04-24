@@ -8,11 +8,16 @@ import me.itsadrift.regionaccess.utils.WGUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.util.StringUtil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
-public class RegionAccessCommand implements CommandExecutor {
+public class RegionAccessCommand implements CommandExecutor, TabCompleter {
 
     private RegionAccess main;
     public RegionAccessCommand(RegionAccess main) {
@@ -34,7 +39,7 @@ public class RegionAccessCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length >= 1) {
-            switch (args[0]) {
+            switch (args[0].toLowerCase()) {
                 case "help":
                     if (player.hasPermission("regionaccess.help")) {
                         player.sendMessage(Settings.HELP);
@@ -181,4 +186,30 @@ public class RegionAccessCommand implements CommandExecutor {
         return false;
     }
 
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String s, String[] args) {
+        List<String> results = new ArrayList<>();
+
+        if (args.length == 1) {
+            return StringUtil.copyPartialMatches(args[0], Arrays.asList("help", "reload", "info", "set", "edit", "remove"), new ArrayList<>());
+        } else if (args.length == 2) {
+            if (equalsAny(args[0], "info", "set", "edit", "remove")) {
+                return StringUtil.copyPartialMatches(args[1], main.getRegionManager().getAllNames(), new ArrayList<>());
+            }
+        } else if (args.length == 3) {
+            if (args[0].equalsIgnoreCase("set")) {
+                results.add("<permission>");
+            } else if (args[0].equalsIgnoreCase("edit")) {
+                return StringUtil.copyPartialMatches(args[2], Arrays.asList("denyMessage", "memberBypass"), new ArrayList<>());
+            }
+        } else if (args.length == 4) {
+            if (equalsAny(args[2], "denyMessage", "deny", "dm", "message", "msg")) {
+                results.add("<Message...>");
+            } else if (equalsAny(args[2], "memberBypass", "mb", "bypass")) {
+                return StringUtil.copyPartialMatches(args[3], Arrays.asList("true", "false"), new ArrayList<>());
+            }
+        }
+
+        return results;
+    }
 }

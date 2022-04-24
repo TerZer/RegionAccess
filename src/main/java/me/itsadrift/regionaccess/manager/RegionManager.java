@@ -8,12 +8,14 @@ import me.itsadrift.regionaccess.Settings;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class RegionManager {
 
     // regionName, Region
-    private Map<String, AccessRegion> regions = new HashMap<>();
+    private final Map<String, AccessRegion> regions = new HashMap<>();
 
     private RegionAccess main;
     public RegionManager(RegionAccess main) {
@@ -69,6 +71,10 @@ public class RegionManager {
 
     public AccessRegion getRegion(String regionName) {
         return regions.get(regionName);
+    }
+
+    public Set<String> getAllNames() {
+        return regions.keySet();
     }
 
     public boolean isAccessRegion(String regionName) {

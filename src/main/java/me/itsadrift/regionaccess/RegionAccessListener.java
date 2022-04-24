@@ -26,9 +26,7 @@ public class RegionAccessListener implements Listener {
         if (e.getPlayer().hasPermission("regionaccess.bypass"))
             return;
 
-        if (e.getTo().getBlockX() == e.getFrom().getBlockX()
-                && e.getTo().getBlockZ() == e.getFrom().getBlockZ()
-                && e.getTo().getBlockY() == e.getFrom().getBlockY())
+        if (e.getTo().getBlock().equals(e.getFrom().getBlock()))
             return; // has not moved a full block
 
         if (!regionExistsAt(e.getTo()))

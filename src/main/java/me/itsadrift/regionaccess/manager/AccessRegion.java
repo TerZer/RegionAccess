@@ -2,6 +2,7 @@ package me.itsadrift.regionaccess.manager;
 
 import me.itsadrift.regionaccess.RegionAccess;
 import me.itsadrift.regionaccess.Settings;
+import org.bukkit.Bukkit;
 
 public class AccessRegion {
 
@@ -46,13 +47,18 @@ public class AccessRegion {
     }
 
     public void save(RegionAccess regionAccess) {
-        String path = "data." + regionName + ".";
+        Bukkit.getScheduler().runTaskAsynchronously(regionAccess, new Runnable() {
+            @Override
+            public void run() {
+                String path = "data." + regionName + ".";
 
-        regionAccess.getConfig().set(path + "permission", getPermission());
-        if (!getDenyMessage().equals(Settings.DEFAULT_ACCESS_DENIED))
-            regionAccess.getConfig().set(path + "denyMessage", getDenyMessage());
-        regionAccess.getConfig().set(path + "memberBypass", isMemberBypass());
+                regionAccess.getConfig().set(path + "permission", getPermission());
+                if (!getDenyMessage().equals(Settings.DEFAULT_ACCESS_DENIED))
+                    regionAccess.getConfig().set(path + "denyMessage", getDenyMessage());
+                regionAccess.getConfig().set(path + "memberBypass", isMemberBypass());
 
-        regionAccess.saveConfig();
+                regionAccess.saveConfig();
+            }
+        });
     }
 }
