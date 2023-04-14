@@ -6,6 +6,7 @@ import me.itsadrift.regionaccess.manager.AccessRegion;
 import me.itsadrift.regionaccess.utils.HexUtils;
 import me.itsadrift.regionaccess.utils.Pair;
 import me.itsadrift.regionaccess.utils.WGUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -37,8 +38,14 @@ public class RegionAccessListener implements Listener {
             e.setCancelled(true);
 
             // Creates a Vector (which can be used as a direction) of point A, to point B
+
             Vector v = e.getTo().getBlock().getLocation().subtract(e.getFrom().getBlock().getLocation()).toVector();
-            e.getPlayer().setVelocity(v.multiply(-0.5).setY(0.25)); // Bounce the player back
+            //e.getPlayer().setVelocity(v.multiply(-0.5).setY(0.25)); // Bounce the player back
+
+            Location loc = e.getFrom();
+            e.getPlayer().teleport(loc);
+            Bukkit.getScheduler().runTaskLater(main, () -> e.getPlayer().setVelocity(v.multiply(-0.5).setY(0.25)), 2);
+            //e.getPlayer().setVelocity(v.multiply(-0.5).setY(0.25));
 
             if (!result.getValue().getDenyMessage().equals("disable"))
                 e.getPlayer().sendMessage(HexUtils.colour(result.getValue().getDenyMessage()));
