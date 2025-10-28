@@ -48,7 +48,11 @@ public class RegionAccessCommand implements CommandExecutor, TabCompleter {
                     }
                     break;
                 case "info":
-                    info(player, args[1]);
+                    if(args.length == 2) {
+                        info(player, args[1]);
+                    } else {
+                        player.sendMessage(Settings.INVALID_ARGUMENTS);
+                    }
                     break;
                 case "set":
                     if (args.length == 3) {
